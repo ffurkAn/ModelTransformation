@@ -14,7 +14,7 @@ public class Graph<V,E> {
 	
 	@SuppressWarnings("unchecked")
 	public Graph(){
-		setLastIndex(0);
+		setLastIndex(-1);
 		verticies = new ArrayList<Vertex<V>>();
 		edges = new ArrayList<Edge<E>>();
 		adjacencyList = (List<Integer>[])new List[getLastIndex()];
@@ -24,18 +24,53 @@ public class Graph<V,E> {
 	
 	public void addVertex(Vertex<V> v){
 		
-		if(verticies.contains(v) == false){
-		
+		if(verticies.contains(findVertexByNumber(v.getNumber())) == false){
+			
+			setLastIndex(getLastIndex() + 1);
+			
 			verticies.add(v);
 			adjacencyList[getLastIndex()] = new ArrayList<Integer>();
 			adjacencyList[getLastIndex()].add(v.getNumber());
-			setLastIndex(getLastIndex() + 1);
+			
+			
 		}
 		
 	}
 	
-	public void addEdge(int i, int j) {
+	public Vertex<V> findVertexByNumber(int number) {
+	    Vertex<V> match = null;
+	    for (Vertex<V> v : verticies) {
+	      if (v.getNumber() == number) {
+	        match = v;
+	        break;
+	      }
+	    }
+	    return match;
+	  }
+	
+	/**
+	   * Search the verticies for one with name.
+	   * 
+	   * @param name -
+	   *          the vertex name
+	   * @return the first vertex with a matching name, null if no matches are found
+	   */
+	  public Vertex<V> findVertexByName(String name) {
+	    Vertex<V> match = null;
+	    for (Vertex<V> v : verticies) {
+	      if (name.equals(v.getName())) {
+	        match = v;
+	        break;
+	      }
+	    }
+	    return match;
+	  }
+	
+	public void addEdge(String name, int i, int j) {
 		adjacencyList[i].add(j);
+		
+		edges.add(new Edge<E>(name,i,j));
+		
 	}
 
 	public boolean hasEdge(int i, int j) {
@@ -45,14 +80,18 @@ public class Graph<V,E> {
 	public int inDegree(int i) {
 		int deg = 0;
 		for (int j = 0; j < getLastIndex(); j++)
-			if (adjacencyList[j].contains(i)) deg++;
+			if (adjacencyList[j].contains(i)) 
+				deg++;
+		
 		return deg;
 	}
 
 	public List<Integer> inEdges(int i) {
 		List<Integer> edges = new ArrayList<Integer>();
 		for (int j = 0; j < getLastIndex(); j++)
-			if (adjacencyList[j].contains(i))	edges.add(j);
+			if (adjacencyList[j].contains(i))	
+				edges.add(j);
+		
 		return edges;
 	}
 
@@ -86,7 +125,25 @@ public class Graph<V,E> {
 		Graph.lastIndex = lastIndex;
 	}
 	
-	
+	public String toString() {
+	    StringBuffer tmp = new StringBuffer("Graph[\n");
+	    
+	    for (Vertex<V> vertex : verticies){
+	    	tmp.append("Vertex(");
+	    	tmp.append(vertex.getName());
+	    	tmp.append("), in:[");
+
+	    	for (int i = 0; i < inEdges(vertex.getNumber()).size(); i++ ){
+	    		
+	    		
+	    	}
+
+	    	tmp.append("\n");
+	    }
+	      
+	    tmp.append(']');
+	    return tmp.toString();
+	  }
 	
 }
 
