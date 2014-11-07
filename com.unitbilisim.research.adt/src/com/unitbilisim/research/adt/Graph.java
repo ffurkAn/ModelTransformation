@@ -408,32 +408,7 @@ public class Graph<T> {
     return match;
   }
 
-  /**
-   * Search the graph for cycles. In order to detect cycles, we use a modified
-   * depth first search called a colored DFS. All nodes are initially marked
-   * white. When a node is encountered, it is marked grey, and when its
-   * descendants are completely visited, it is marked black. If a grey node is
-   * ever encountered, then there is a cycle.
-   * 
-   * @return the edges that form cycles in the graph. The array will be empty if
-   *         there are no cycles.
-   */
-  public Edge<T>[] findCycles() {
-    ArrayList<Edge<T>> cycleEdges = new ArrayList<Edge<T>>();
-    // Mark all verticies as white
-    for (int n = 0; n < verticies.size(); n++) {
-      Vertex<T> v = getVertex(n);
-      v.setMarkState(VISIT_COLOR_WHITE);
-    }
-    for (int n = 0; n < verticies.size(); n++) {
-      Vertex<T> v = getVertex(n);
-      visit(v, cycleEdges);
-    }
-
-    Edge<T>[] cycles = new Edge[cycleEdges.size()];
-    cycleEdges.toArray(cycles);
-    return cycles;
-  }
+  
 
   private void visit(Vertex<T> v, ArrayList<Edge<T>> cycleEdges) {
     v.setMarkState(VISIT_COLOR_GREY);
