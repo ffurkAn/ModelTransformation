@@ -6,9 +6,9 @@ package com.unitbilisim.research.adt;
  * 
  * @author Scott.Stark@jboss.org
  * @version $Revision$
- * @param <T>
+ * @param <V,E>
  */
-interface Visitor<T> {
+interface Visitor<V,E> {
   /**
    * Called by the graph traversal methods when a vertex is first visited.
    * 
@@ -17,5 +17,5 @@ interface Visitor<T> {
    * @param v -
    *          the vertex being visited.
    */
-  public void visit(Graph<T> g, Vertex<T> v);
+  public void visit(Graph<V,E> g, Vertex<V> v);
 }

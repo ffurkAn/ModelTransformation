@@ -7,10 +7,10 @@ package com.unitbilisim.research.adt;
  * 
  * @author Scott.Stark@jboss.org
  * @version $Revision$
- * @param <T>
- * @param <E>
+ * @param <V,E>
+ * @param <X>
  */
-interface VisitorEX<T, E extends Exception> {
+interface VisitorEX<V,E, X extends Exception> {
   /**
    * Called by the graph traversal methods when a vertex is first visited.
    * 
@@ -21,5 +21,5 @@ interface VisitorEX<T, E extends Exception> {
    * @throws E
    *           exception for any error
    */
-  public void visit(Graph<T> g, Vertex<T> v) throws E;
+  public void visit(Graph<V,E> g, Vertex<E> v) throws X;
 }
