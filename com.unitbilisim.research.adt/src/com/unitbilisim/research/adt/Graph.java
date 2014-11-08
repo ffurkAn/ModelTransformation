@@ -72,8 +72,11 @@ public class Graph<V,E> {
 	}
 
 	public void addEdge(String name, int i, int j) {
-		adjacencyList.get(i).add(j);
+		if(!hasEdge(i, j)){
+			adjacencyList.get(i).add(j);
 
+		}
+			
 		edges.add(new Edge<E>(name, i, j, adjacencyList.get(i).indexOf(j)));
 
 	}
@@ -130,6 +133,43 @@ public class Graph<V,E> {
 		this.lastIndex = lastIndex;
 	}
 
+	public List<Edge<E>> getIncomingEdges(Vertex<V> v){
+
+		List<Edge<E>> incomingEdges = new ArrayList<Edge<E>>();
+
+		for(Edge<E> e : edges){
+
+			int target = e.getTo();
+
+			if(findVertexByNumber(target) == v)
+			{
+				incomingEdges.add(e);
+			}
+		}
+		
+		return incomingEdges;
+
+	}
+	
+	public List<Edge<E>> getOutgoingEdges(Vertex<V> v){
+		
+		List<Edge<E>> outgoingEdges = new ArrayList<Edge<E>>();
+
+		for(Edge<E> e : edges){
+
+			int target = e.getFrom();
+
+			if(findVertexByNumber(target) == v)
+			{
+				outgoingEdges.add(e);
+			}
+		}
+		
+		return outgoingEdges;
+
+	}
+	
+	
 	public String toString() {
 		StringBuffer tmp = new StringBuffer("Graph[\n");
 
@@ -138,11 +178,11 @@ public class Graph<V,E> {
 			tmp.append(vertex.getName());
 			tmp.append("), in:[");
 
-			List<Integer> incomingEdges = inEdges(vertex.getNumber());
+			List<Edge<E>> incomingEdges = getIncomingEdges(vertex);
 			for (int i = 0; i < incomingEdges.size(); i++ ){
 
-				Vertex<V> sourceVertex = findVertexByNumber(incomingEdges.get(i));
-				Edge<E> edge = getEdge(sourceVertex, vertex);
+				Vertex<V> sourceVertex = findVertexByNumber(incomingEdges.get(i).getFrom());
+				//Edge<E> edge = getEdge(sourceVertex, vertex);
 				
 				if (i > 0)
 					tmp.append(',');
@@ -152,9 +192,9 @@ public class Graph<V,E> {
 				tmp.append("From: ");
 				tmp.append(sourceVertex.getName());
 				tmp.append(", ");
-				tmp.append(edge.getName());
+				tmp.append(incomingEdges.get(i).getName());
 				tmp.append(", Cost:");
-				tmp.append(edge.getCost());
+				tmp.append(incomingEdges.get(i).getCost());
 				tmp.append('}');
 
 			}
@@ -165,16 +205,10 @@ public class Graph<V,E> {
 
 			tmp.append("], out:[");
 
-			List<Integer> outgoingEdges = outEdges(vertex.getNumber());
-			for(int i = 1; i < outgoingEdges.size(); i++){
-
-				for(Edge<E> e : edges){
-
-					if(e.getTo() == outgoingEdges.get(i) && e.getFrom() == vertex.getNumber()){
-
-						Vertex<V> targetVertex = findVertexByNumber(outgoingEdges.get(i));
-						Edge<E> edge = getEdge(vertex, targetVertex);
-						
+			List<Edge<E>> outgoingEdges = getOutgoingEdges(vertex);
+			for(int i = 0; i < outgoingEdges.size(); i++){
+				
+						Vertex<V> targetVertex = findVertexByNumber(outgoingEdges.get(i).getTo());						
 						if (i > 0)
 							tmp.append(',');
 						//tmp.append(e+"\n");
@@ -183,12 +217,12 @@ public class Graph<V,E> {
 						tmp.append("To: ");
 						tmp.append(targetVertex.getName());
 						tmp.append(", ");
-						tmp.append(edge.getName());
+						tmp.append(outgoingEdges.get(i).getName());
 						tmp.append(", Cost:");
-						tmp.append(edge.getCost());
+						tmp.append(outgoingEdges.get(i).getCost());
 						tmp.append('}');
-					}
-				}
+					
+				
 			}
 
 			tmp.append(']');
@@ -206,7 +240,7 @@ public class Graph<V,E> {
 
 
 
-
+	/*
 	private Edge<E> getEdge(Vertex<V> vertex, Vertex<V> targetVertex) {
 		// TODO Auto-generated method stub
 		
@@ -223,7 +257,8 @@ public class Graph<V,E> {
 		
 		return null;
 	}
-
+	*/
+	
 	public String getName() {
 		return name;
 	}

@@ -20,6 +20,8 @@ public class test {
 		graph.addVertex(vertex2);
 		
 		graph.addEdge("Ali->Veli", vertex.getNumber(), vertex2.getNumber());
+		graph.addEdge("Ali->Veli2", vertex.getNumber(), vertex2.getNumber());
+
 		
 		System.out.println(graph.toString());
 
