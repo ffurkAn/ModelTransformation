@@ -9,11 +9,13 @@ public class Edge<E> {
 	private int from;
 	private int to;
 
-	public Edge(String edgeName, int source, int target){
+	public Edge(String edgeName, int source, int target, int cost){
 		
 		name = edgeName;
 		setFrom(source);
 		setTo(target);
+		this.cost = cost;
+				
 	}
 	
 	public String getName() {

@@ -61,7 +61,7 @@ public class ConvertEcore2Graph {
 		Iterator<EObject> resourceObjects = resource.getAllContents();		
 
 		// Create a new Graph instance
-		Graph<String> graph = new Graph<String>();
+		Graph<String, String> graph = new Graph<String, String>();
 
 		
 		// Find all EClass and EAttributes(EAttributes should have different EType)
@@ -97,7 +97,7 @@ public class ConvertEcore2Graph {
 				Vertex<String> source = hash.get(c);
 				Vertex<String> target = graph.findVertexByName(a.getEType().getName());
 
-				graph.addEdge(source,target, a.getName());
+				graph.addEdge(a.getName(), source.getNumber(), target.getNumber());
 
 				
 			}
@@ -108,8 +108,7 @@ public class ConvertEcore2Graph {
 
 	}
 
-	private static void EReference2Edge(EReference r, EClass c,
-			Graph<String> graph) {
+	private static void EReference2Edge(EReference r, EClass c, Graph<String, String> graph) {
 		// TODO Auto-generated method stub
 		
 		// Get the source vertex from HashMap
@@ -120,10 +119,10 @@ public class ConvertEcore2Graph {
 		Vertex<String> target = hash.get(r.getEReferenceType()) ;
 		
 		// Create and add edge between source and target vertices
-		graph.addEdge(source,target, r.getName());
+		graph.addEdge(r.getName(), source.getNumber(), target.getNumber());
 	}
 
-	private static void EAttribute2Node(Object o, Graph<String> graph) {
+	private static void EAttribute2Node(Object o, Graph<String, String> graph) {
 		// TODO Auto-generated method stub
 
 		EAttribute eAttribute = (EAttribute)o;
@@ -131,6 +130,7 @@ public class ConvertEcore2Graph {
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eAttribute.getEType().getName());
+		vertex.setNumber(Graph.getLastIndex());
 		graph.addVertex(vertex);
 
 		// Add EAtt. and corresponding vertex to the HashMap
@@ -138,13 +138,15 @@ public class ConvertEcore2Graph {
 		
 	}
 
-	private static void EClass2Node(Object o, Graph<String> graph) {
+	private static void EClass2Node(Object o, Graph<String, String> graph) {
 		// TODO Auto-generated method stub
 		EClass eClass = (EClass)o;
 
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eClass.getName());
+		vertex.setNumber(Graph.getLastIndex());
+		
 		graph.addVertex(vertex);
 		
 		// Add EClasses to the list in order to iterate later
@@ -152,6 +154,9 @@ public class ConvertEcore2Graph {
 		
 		// Add EAtt. and corresponding vertex to the HashMap
 		hash.put(eClass, vertex);
+		
+		
+		
 	}
 
 }

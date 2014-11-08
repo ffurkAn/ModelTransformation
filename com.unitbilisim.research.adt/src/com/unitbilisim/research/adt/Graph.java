@@ -10,11 +10,13 @@ public class Graph<V,E> {
 	private List<Edge<E>> edges;
 	private List<Integer>[] adjacencyList;
 	private static int lastIndex;
+
 	
 	
 	@SuppressWarnings("unchecked")
 	public Graph(){
-		setLastIndex(-1);
+		
+		setLastIndex(0);
 		verticies = new ArrayList<Vertex<V>>();
 		edges = new ArrayList<Edge<E>>();
 		adjacencyList = (List<Integer>[])new List[getLastIndex()];
@@ -26,14 +28,20 @@ public class Graph<V,E> {
 		
 		if(verticies.contains(findVertexByNumber(v.getNumber())) == false){
 			
-			setLastIndex(getLastIndex() + 1);
+			setLastIndex(getLastIndex());
 			
 			verticies.add(v);
+			
 			adjacencyList[getLastIndex()] = new ArrayList<Integer>();
 			adjacencyList[getLastIndex()].add(v.getNumber());
-			
-			
+				
 		}
+		
+	}
+	
+	
+	public void addEdge(){
+		
 		
 	}
 	
@@ -69,7 +77,7 @@ public class Graph<V,E> {
 	public void addEdge(String name, int i, int j) {
 		adjacencyList[i].add(j);
 		
-		edges.add(new Edge<E>(name,i,j));
+		edges.add(new Edge<E>(name, i, j, adjacencyList[i].size()));
 		
 	}
 
@@ -133,10 +141,36 @@ public class Graph<V,E> {
 	    	tmp.append(vertex.getName());
 	    	tmp.append("), in:[");
 
-	    	for (int i = 0; i < inEdges(vertex.getNumber()).size(); i++ ){
+	    	List<Integer> incomingEdges = inEdges(vertex.getNumber());
+	    	for (int i = 0; i < incomingEdges.size(); i++ ){
 	    		
+	    		for(Edge<E> e : edges){
+	    			
+	    			if(e.getFrom() == incomingEdges.get(i) && e.getTo() == vertex.getNumber())
+	    			{
+	    				
+	    				tmp.append(e.getName());
+	    				tmp.append("cost:");
+	    				tmp.append(e.getCost());
+	    			}
+	    		}
 	    		
 	    	}
+	    	
+	    	List<Integer> outgoingEdges = inEdges(vertex.getNumber());
+	    	for(int i = 0; i < outgoingEdges.size(); i++){
+	    		
+	    		for(Edge<E> e : edges){
+	    			
+	    			if(e.getTo() == outgoingEdges.get(i) && e.getFrom() == vertex.getNumber()){
+	    				
+	    				tmp.append(e.getName());
+	    				tmp.append("cost:");
+	    				tmp.append(e.getCost());
+	    			}
+	    		}
+	    	}
+	    	
 
 	    	tmp.append("\n");
 	    }

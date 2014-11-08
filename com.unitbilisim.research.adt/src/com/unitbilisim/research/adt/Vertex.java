@@ -4,9 +4,10 @@ package com.unitbilisim.research.adt;
 public class Vertex<V> {
 
 	private String name; 
-	private Integer number;
+	private Integer number; //index
 	private V data;
 	
+
 	
 	public String getName() {
 		return name;
