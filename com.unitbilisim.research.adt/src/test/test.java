@@ -3,6 +3,11 @@ package test;
 import com.unitbilisim.research.adt.Graph;
 import com.unitbilisim.research.adt.Vertex;
 
+/**
+ * Class to test graph data structure
+ * 
+ * @author furkan.tanriverdi@unitbilisim.com
+ */
 public class test {
 
 	public static void main(String[] args) {

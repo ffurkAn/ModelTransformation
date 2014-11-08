@@ -1,6 +1,12 @@
 package com.unitbilisim.research.adt;
 
 
+/**
+ * Vertex class
+ * 
+ * @author furkan.tanriverdi@unitbilisim.com
+ * @param <V>
+ */
 public class Vertex<V> {
 
 	private String name; 

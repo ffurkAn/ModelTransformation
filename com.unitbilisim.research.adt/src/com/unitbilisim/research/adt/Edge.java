@@ -1,5 +1,12 @@
 package com.unitbilisim.research.adt;
 
+
+/**
+ * Edge class
+ * 
+ * @author furkan.tanriverdi@unitbilisim.com
+ * @param <E>
+ */
 public class Edge<E> {
 
 	private String name; 

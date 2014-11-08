@@ -20,21 +20,26 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import com.unitbilisim.research.adt.Graph;
 import com.unitbilisim.research.adt.Vertex;
 
+
+/**
+ * A class to 
+ * 
+ * @author furkan.tanriverdi@unitbilisim.com
+ */
 public class ConvertEcore2Graph {
 
+	/** Resource instance to keep ecore content */
 	private static Resource resource;
-		
-	// This commit line was added and commited from EGit, pushed from git ext.
 	
+	/** Map to store EObjects as keys and Verticies as values */
 	static HashMap<EObject,Vertex<String>> hash = new HashMap<EObject, Vertex<String>>();
 	
-	// Get EClasses
+	/** List to store EClasses */
 	static List<EClass> eClasses = new ArrayList<EClass>();
 			
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
 		// Register the XMI resource factory for the .graph extension
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		Map<String, Object> m = reg.getExtensionToFactoryMap();
@@ -57,7 +62,7 @@ public class ConvertEcore2Graph {
 			System.out.println("ERROR! Saving Resource ")} 
 		 */
 
-		// Get EObjects
+		/** Iterator to store EObjects in *.ecore file */
 		Iterator<EObject> resourceObjects = resource.getAllContents();		
 
 		// Create a new Graph instance
@@ -113,8 +118,18 @@ public class ConvertEcore2Graph {
 
 	}
 
+	/**
+	 * Convert EReference to Edge<E>
+	 * 
+	 * @param EReference r
+	 * 
+	 * @param EClass c
+	 * 
+	 * @param Graph<String, String> graph
+	 *                
+	 * @return void
+	 */
 	private static void EReference2Edge(EReference r, EClass c, Graph<String, String> graph) {
-		// TODO Auto-generated method stub
 		
 		// Get the source vertex from HashMap
 		Vertex<String> source = hash.get(c);
@@ -127,9 +142,18 @@ public class ConvertEcore2Graph {
 		graph.addEdge(r.getName(), source.getNumber(), target.getNumber());
 	}
 
+	/**
+	 * Convert EAttribute to Vertex<V>
+	 * 
+	 * @param Object o
+	 * 			object to be converted
+	 * 
+	 * @param Graph<String, String> graph
+	 *                
+	 * @return void
+	 */
 	private static void EAttribute2Node(Object o, Graph<String, String> graph) {
-		// TODO Auto-generated method stub
-
+		
 		EAttribute eAttribute = (EAttribute)o;
 
 		// Create new vertex for EAtt.
@@ -143,8 +167,18 @@ public class ConvertEcore2Graph {
 		
 	}
 
+	/**
+	 * Convert EClass to Vertex<V>
+	 * 
+	 * @param Object o
+	 * 			object to be converted
+	 * 
+	 * @param Graph<String, String> graph
+	 *                
+	 * @return void
+	 */
 	private static void EClass2Node(Object o, Graph<String, String> graph) {
-		// TODO Auto-generated method stub
+		
 		EClass eClass = (EClass)o;
 
 		// Create new vertex for EAtt.
