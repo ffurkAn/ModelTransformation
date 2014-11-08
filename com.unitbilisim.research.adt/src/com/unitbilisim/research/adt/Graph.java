@@ -8,18 +8,18 @@ public class Graph<V,E> {
 
 	private List<Vertex<V>> verticies; 
 	private List<Edge<E>> edges;
-	private List<Integer>[] adjacencyList;
-	private static int lastIndex;
+	private List<List<Integer>> adjacencyList;
+	private int lastIndex;
+	private String name;
 
 	
 	
-	@SuppressWarnings("unchecked")
 	public Graph(){
 		
-		setLastIndex(0);
+		lastIndex = 0;
 		verticies = new ArrayList<Vertex<V>>();
 		edges = new ArrayList<Edge<E>>();
-		adjacencyList = (List<Integer>[])new List[getLastIndex()];
+		adjacencyList = new ArrayList<List<Integer>>();
 		//for (int i = 0; i < lastIndex; i++) 
 		//	adjacencyList[i] = new ArrayList<Integer>();
 	}
@@ -28,22 +28,17 @@ public class Graph<V,E> {
 		
 		if(verticies.contains(findVertexByNumber(v.getNumber())) == false){
 			
-			setLastIndex(getLastIndex());
+			//setLastIndex(getLastIndex());
 			
 			verticies.add(v);
 			
-			adjacencyList[getLastIndex()] = new ArrayList<Integer>();
-			adjacencyList[getLastIndex()].add(v.getNumber());
+			adjacencyList.add(new ArrayList<Integer>());
+			adjacencyList.get(lastIndex).add(v.getNumber());
 				
 		}
 		
 	}
 	
-	
-	public void addEdge(){
-		
-		
-	}
 	
 	public Vertex<V> findVertexByNumber(int number) {
 	    Vertex<V> match = null;
@@ -75,20 +70,20 @@ public class Graph<V,E> {
 	  }
 	
 	public void addEdge(String name, int i, int j) {
-		adjacencyList[i].add(j);
+		adjacencyList.get(i).add(j);
 		
-		edges.add(new Edge<E>(name, i, j, adjacencyList[i].size()));
+		edges.add(new Edge<E>(name, i, j, adjacencyList.get(i).size()));
 		
 	}
 
 	public boolean hasEdge(int i, int j) {
-		return adjacencyList[i].contains(j);
+		return adjacencyList.get(i).contains(j);
 	}
 
 	public int inDegree(int i) {
 		int deg = 0;
 		for (int j = 0; j < getLastIndex(); j++)
-			if (adjacencyList[j].contains(i)) 
+			if (adjacencyList.get(i).contains(i)) 
 				deg++;
 		
 		return deg;
@@ -97,7 +92,7 @@ public class Graph<V,E> {
 	public List<Integer> inEdges(int i) {
 		List<Integer> edges = new ArrayList<Integer>();
 		for (int j = 0; j < getLastIndex(); j++)
-			if (adjacencyList[j].contains(i))	
+			if (adjacencyList.get(i).contains(i))	
 				edges.add(j);
 		
 		return edges;
@@ -108,15 +103,15 @@ public class Graph<V,E> {
 	}
 
 	public int outDegree(int i) {
-		return adjacencyList[i].size();
+		return adjacencyList.get(i).size();
 	}
 
 	public List<Integer> outEdges(int i) {
-		return adjacencyList[i];
+		return adjacencyList.get(i);
 	}
 
 	public void removeEdge(int i, int j) {
-		Iterator<Integer> it = adjacencyList[i].iterator();
+		Iterator<Integer> it = adjacencyList.get(i).iterator();
 		while (it.hasNext()) {
 			if (it.next() == j) {
 				it.remove();
@@ -125,12 +120,12 @@ public class Graph<V,E> {
 		}	
 	}
 
-	public static int getLastIndex() {
+	public int getLastIndex() {
 		return lastIndex;
 	}
 
-	public static void setLastIndex(int lastIndex) {
-		Graph.lastIndex = lastIndex;
+	public void setLastIndex(int lastIndex) {
+		this.lastIndex = lastIndex;
 	}
 	
 	public String toString() {
@@ -178,6 +173,14 @@ public class Graph<V,E> {
 	    tmp.append(']');
 	    return tmp.toString();
 	  }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }
 

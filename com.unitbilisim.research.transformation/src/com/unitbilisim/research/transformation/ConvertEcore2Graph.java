@@ -10,13 +10,13 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import com.unitbilisim.research.adt.Edge;
 import com.unitbilisim.research.adt.Graph;
 import com.unitbilisim.research.adt.Vertex;
 
@@ -69,6 +69,11 @@ public class ConvertEcore2Graph {
 		while (resourceObjects.hasNext()) {
 			Object o = resourceObjects.next();
 
+			if(o instanceof EPackage){
+					
+				graph.setName(((EPackage) o).getName());
+			}
+			
 			if(o instanceof EClass){		
 				
 				EClass2Node(o,graph);
@@ -130,7 +135,7 @@ public class ConvertEcore2Graph {
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eAttribute.getEType().getName());
-		vertex.setNumber(Graph.getLastIndex());
+		vertex.setNumber(graph.getLastIndex());
 		graph.addVertex(vertex);
 
 		// Add EAtt. and corresponding vertex to the HashMap
@@ -145,7 +150,7 @@ public class ConvertEcore2Graph {
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eClass.getName());
-		vertex.setNumber(Graph.getLastIndex());
+		vertex.setNumber(graph.getLastIndex());
 		
 		graph.addVertex(vertex);
 		
