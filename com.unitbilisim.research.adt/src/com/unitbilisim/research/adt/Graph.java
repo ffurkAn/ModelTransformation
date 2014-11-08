@@ -12,68 +12,70 @@ public class Graph<V,E> {
 	private int lastIndex;
 	private String name;
 
-	
-	
+
+
 	public Graph(){
-		
-		lastIndex = 0;
+
+		lastIndex = -1;
 		verticies = new ArrayList<Vertex<V>>();
 		edges = new ArrayList<Edge<E>>();
 		adjacencyList = new ArrayList<List<Integer>>();
 		//for (int i = 0; i < lastIndex; i++) 
 		//	adjacencyList[i] = new ArrayList<Integer>();
 	}
-	
+
 	public void addVertex(Vertex<V> v){
-		
-		if(verticies.contains(findVertexByNumber(v.getNumber())) == false){
-			
+
+		if(findVertexByName(v.getName()) == null){
+
 			//setLastIndex(getLastIndex());
-			
+
 			verticies.add(v);
-			
+			lastIndex++;
+			v.setNumber(lastIndex);
+
 			adjacencyList.add(new ArrayList<Integer>());
 			adjacencyList.get(lastIndex).add(v.getNumber());
-				
+
 		}
-		
+
 	}
-	
-	
+
+
 	public Vertex<V> findVertexByNumber(int number) {
-	    Vertex<V> match = null;
-	    for (Vertex<V> v : verticies) {
-	      if (v.getNumber() == number) {
-	        match = v;
-	        break;
-	      }
-	    }
-	    return match;
-	  }
-	
+		Vertex<V> match = null;
+		for (Vertex<V> v : verticies) {
+			if (v.getNumber() == number) {
+				match = v;
+				break;
+			}
+		}
+		return match;
+	}
+
 	/**
-	   * Search the verticies for one with name.
-	   * 
-	   * @param name -
-	   *          the vertex name
-	   * @return the first vertex with a matching name, null if no matches are found
-	   */
-	  public Vertex<V> findVertexByName(String name) {
-	    Vertex<V> match = null;
-	    for (Vertex<V> v : verticies) {
-	      if (name.equals(v.getName())) {
-	        match = v;
-	        break;
-	      }
-	    }
-	    return match;
-	  }
-	
+	 * Search the verticies for one with name.
+	 * 
+	 * @param name -
+	 *          the vertex name
+	 * @return the first vertex with a matching name, null if no matches are found
+	 */
+	public Vertex<V> findVertexByName(String name) {
+		Vertex<V> match = null;
+		for (Vertex<V> v : verticies) {
+			if (name.equals(v.getName())) {
+				match = v;
+				break;
+			}
+		}
+		return match;
+	}
+
 	public void addEdge(String name, int i, int j) {
 		adjacencyList.get(i).add(j);
-		
-		edges.add(new Edge<E>(name, i, j, adjacencyList.get(i).size()));
-		
+
+		edges.add(new Edge<E>(name, i, j, adjacencyList.get(i).indexOf(j)));
+
 	}
 
 	public boolean hasEdge(int i, int j) {
@@ -85,16 +87,16 @@ public class Graph<V,E> {
 		for (int j = 0; j < getLastIndex(); j++)
 			if (adjacencyList.get(i).contains(i)) 
 				deg++;
-		
+
 		return deg;
 	}
 
 	public List<Integer> inEdges(int i) {
 		List<Integer> edges = new ArrayList<Integer>();
 		for (int j = 0; j < getLastIndex(); j++)
-			if (adjacencyList.get(i).contains(i))	
+			if (adjacencyList.get(j).contains(i) && j != i)	
 				edges.add(j);
-		
+
 		return edges;
 	}
 
@@ -127,52 +129,100 @@ public class Graph<V,E> {
 	public void setLastIndex(int lastIndex) {
 		this.lastIndex = lastIndex;
 	}
-	
+
 	public String toString() {
-	    StringBuffer tmp = new StringBuffer("Graph[\n");
-	    
-	    for (Vertex<V> vertex : verticies){
-	    	tmp.append("Vertex(");
-	    	tmp.append(vertex.getName());
-	    	tmp.append("), in:[");
+		StringBuffer tmp = new StringBuffer("Graph[\n");
 
-	    	List<Integer> incomingEdges = inEdges(vertex.getNumber());
-	    	for (int i = 0; i < incomingEdges.size(); i++ ){
-	    		
-	    		for(Edge<E> e : edges){
-	    			
-	    			if(e.getFrom() == incomingEdges.get(i) && e.getTo() == vertex.getNumber())
-	    			{
-	    				
-	    				tmp.append(e.getName());
-	    				tmp.append("cost:");
-	    				tmp.append(e.getCost());
-	    			}
-	    		}
-	    		
-	    	}
-	    	
-	    	List<Integer> outgoingEdges = inEdges(vertex.getNumber());
-	    	for(int i = 0; i < outgoingEdges.size(); i++){
-	    		
-	    		for(Edge<E> e : edges){
-	    			
-	    			if(e.getTo() == outgoingEdges.get(i) && e.getFrom() == vertex.getNumber()){
-	    				
-	    				tmp.append(e.getName());
-	    				tmp.append("cost:");
-	    				tmp.append(e.getCost());
-	    			}
-	    		}
-	    	}
-	    	
+		for (Vertex<V> vertex : verticies){
+			tmp.append("Vertex(");
+			tmp.append(vertex.getName());
+			tmp.append("), in:[");
 
-	    	tmp.append("\n");
-	    }
-	      
-	    tmp.append(']');
-	    return tmp.toString();
-	  }
+			List<Integer> incomingEdges = inEdges(vertex.getNumber());
+			for (int i = 0; i < incomingEdges.size(); i++ ){
+
+				Vertex<V> sourceVertex = findVertexByNumber(incomingEdges.get(i));
+				Edge<E> edge = getEdge(sourceVertex, vertex);
+				
+				if (i > 0)
+					tmp.append(',');
+				//tmp.append(e+"\n");
+
+				tmp.append('{');
+				tmp.append("From: ");
+				tmp.append(sourceVertex.getName());
+				tmp.append(", ");
+				tmp.append(edge.getName());
+				tmp.append(", Cost:");
+				tmp.append(edge.getCost());
+				tmp.append('}');
+
+			}
+
+
+
+
+
+			tmp.append("], out:[");
+
+			List<Integer> outgoingEdges = outEdges(vertex.getNumber());
+			for(int i = 1; i < outgoingEdges.size(); i++){
+
+				for(Edge<E> e : edges){
+
+					if(e.getTo() == outgoingEdges.get(i) && e.getFrom() == vertex.getNumber()){
+
+						Vertex<V> targetVertex = findVertexByNumber(outgoingEdges.get(i));
+						Edge<E> edge = getEdge(vertex, targetVertex);
+						
+						if (i > 0)
+							tmp.append(',');
+						//tmp.append(e+"\n");
+
+						tmp.append('{');
+						tmp.append("To: ");
+						tmp.append(targetVertex.getName());
+						tmp.append(", ");
+						tmp.append(edge.getName());
+						tmp.append(", Cost:");
+						tmp.append(edge.getCost());
+						tmp.append('}');
+					}
+				}
+			}
+
+			tmp.append(']');
+			tmp.append("\n");
+
+			
+
+		}
+		
+		tmp.append("]");
+
+		return tmp.toString();
+	}
+
+
+
+
+
+	private Edge<E> getEdge(Vertex<V> vertex, Vertex<V> targetVertex) {
+		// TODO Auto-generated method stub
+		
+		for(Edge<E> e : edges){
+			
+			int target = e.getTo();
+			int source = e.getFrom();
+			
+			if(findVertexByNumber(source) == vertex && findVertexByNumber(target) == targetVertex)
+			{
+				return e;
+			}
+		}
+		
+		return null;
+	}
 
 	public String getName() {
 		return name;
@@ -181,6 +231,6 @@ public class Graph<V,E> {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }
 
