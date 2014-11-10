@@ -117,31 +117,7 @@ public class ConvertEcore2Graph {
 		System.out.println(graph.toString());
 
 	}
-
-	/**
-	 * Convert EReference to Edge<E>
-	 * 
-	 * @param EReference - r
-	 * 
-	 * @param EClass - c
-	 * 
-	 * @param Graph<String, String> - graph
-	 *                
-	 * @return void
-	 */
-	private static void EReference2Edge(EReference r, EClass c, Graph<String, String> graph) {
-		
-		// Get the source vertex from HashMap
-		Vertex<String> source = hash.get(c);
-		
-		// Get the target vertex from HashMap
-
-		Vertex<String> target = hash.get(r.getEReferenceType()) ;
-		
-		// Create and add edge between source and target vertices
-		graph.addEdge(r.getName(), source.getNumber(), target.getNumber());
-	}
-
+	
 	/**
 	 * Convert EAttribute to Vertex<V>
 	 * 
@@ -197,5 +173,31 @@ public class ConvertEcore2Graph {
 		
 		
 	}
+
+	/**
+	 * Convert EReference to Edge<E>
+	 * 
+	 * @param EReference - r
+	 * 
+	 * @param EClass - c
+	 * 
+	 * @param Graph<String, String> - graph
+	 *                
+	 * @return void
+	 */
+	private static void EReference2Edge(EReference r, EClass c, Graph<String, String> graph) {
+		
+		// Get the source vertex from HashMap
+		Vertex<String> source = hash.get(c);
+		
+		// Get the target vertex from HashMap
+
+		Vertex<String> target = hash.get(r.getEReferenceType()) ;
+		
+		// Create and add edge between source and target vertices
+		graph.addEdge(r.getName(), source.getNumber(), target.getNumber());
+	}
+
+	
 
 }
