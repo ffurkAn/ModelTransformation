@@ -156,7 +156,7 @@ public class Graph<V,E> {
 	 * @return void
 	 */
 	public void addEdge(String name, int from, int to) {
-		
+
 		if(!hasEdge(from, to)){
 			adjacencyList.get(from).add(to);
 
@@ -240,7 +240,7 @@ public class Graph<V,E> {
 			int target = e.getTo();
 
 			if(findVertexByNumber(target) == v){
-				
+
 				incomingEdges.add(e);
 			}
 		}
@@ -262,7 +262,7 @@ public class Graph<V,E> {
 			int target = e.getFrom();
 
 			if(findVertexByNumber(target) == v){
-		
+
 				outgoingEdges.add(e);
 			}
 		}
@@ -274,17 +274,17 @@ public class Graph<V,E> {
 	 * @return a string form of the vertex with in and out edges.
 	 */
 	public String toString() {
-		
+
 		StringBuffer tmp = new StringBuffer("Graph[\n");
 
 		for (Vertex<V> vertex : verticies){
-			
+
 			tmp.append("Vertex(");
 			tmp.append(vertex.getName());
 			tmp.append("), in:[");
 
 			List<Edge<E>> incomingEdges = getIncomingEdges(vertex);
-			
+
 			for (int i = 0; i < incomingEdges.size(); i++ ){
 
 				Vertex<V> sourceVertex = findVertexByNumber(incomingEdges.get(i).getFrom());
@@ -307,7 +307,7 @@ public class Graph<V,E> {
 			tmp.append("], out:[");
 
 			List<Edge<E>> outgoingEdges = getOutgoingEdges(vertex);
-			
+
 			for(int i = 0; i < outgoingEdges.size(); i++){
 
 				Vertex<V> targetVertex = findVertexByNumber(outgoingEdges.get(i).getTo());						

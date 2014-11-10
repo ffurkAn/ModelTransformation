@@ -11,35 +11,37 @@ public class Edge<E> {
 
 	/** Edge's name */
 	private String name;
-	
-	/** Edge's number */
+
+	/*
+	/** Edge's number * 
 	private int number;
+	*/
 	
 	/** Data which will be kept by the Edge */
 	private E Data; 
-	
+
 	/** Edge's cost */
 	private int cost;
-	
+
 	/** Number of starting vertex */
 	private int from;
-	
+
 	/** Number of ending vertex */
 	private int to;
 
-	
+
 	/**
 	 * Construct a new Edge 
 	 */
 	public Edge(String edgeName, int source, int target, int cost){
-		
+
 		name = edgeName;
 		setFrom(source);
 		setTo(target);
 		this.cost = cost;
-				
+
 	}
-	
+
 	/**
 	 * Returns name of edge
 	 * 
@@ -48,7 +50,7 @@ public class Edge<E> {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Set edge's name
 	 * 
@@ -94,11 +96,12 @@ public class Edge<E> {
 		this.cost = cost;
 	}
 
+	/*
 	/**
 	 * Returns number of edge
 	 * 
 	 * @return int
-	 */
+	 *
 	public int getNumber() {
 		return number;
 	}
@@ -107,10 +110,11 @@ public class Edge<E> {
 	 * Set edge's number
 	 * 
 	 * @param int - number
-	 */
+	 *
 	public void setNumber(int number) {
 		this.number = number;
 	}
+	*/
 
 	/**
 	 * Returns edge's starting vertex number
@@ -149,6 +153,6 @@ public class Edge<E> {
 	public void setTo(int to) {
 		this.to = to;
 	}  
-	
+
 
 }

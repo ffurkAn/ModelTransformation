@@ -30,16 +30,16 @@ public class ConvertEcore2Graph {
 
 	/** Resource instance to keep ecore content */
 	private static Resource resource;
-	
+
 	/** Map to store EObjects as keys and Verticies as values */
 	static HashMap<EObject,Vertex<String>> hash = new HashMap<EObject, Vertex<String>>();
-	
+
 	/** List to store EClasses */
 	static List<EClass> eClasses = new ArrayList<EClass>();
-			
-	
+
+
 	public static void main(String[] args) {
-		
+
 		// Register the XMI resource factory for the .graph extension
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		Map<String, Object> m = reg.getExtensionToFactoryMap();
@@ -68,24 +68,24 @@ public class ConvertEcore2Graph {
 		// Create a new Graph instance
 		Graph<String, String> graph = new Graph<String, String>();
 
-		
+
 		// Find all EClass and EAttributes(EAttributes should have different EType)
 		// and create corresponding vertex
 		while (resourceObjects.hasNext()) {
 			Object o = resourceObjects.next();
 
 			if(o instanceof EPackage){
-					
+
 				graph.setName(((EPackage) o).getName());
 			}
-			
+
 			if(o instanceof EClass){		
-				
+
 				EClass2Node(o,graph);
 			}
 
 			if(o instanceof EAttribute){	
-				
+
 				// if there is no vertex named EAttribute's EType in graph
 				if(graph.findVertexByName(((EAttribute) o).getEType().getName()) == null){
 
@@ -109,7 +109,7 @@ public class ConvertEcore2Graph {
 
 				graph.addEdge(a.getName(), source.getNumber(), target.getNumber());
 
-				
+
 			}
 		}
 
@@ -117,7 +117,7 @@ public class ConvertEcore2Graph {
 		System.out.println(graph.toString());
 
 	}
-	
+
 	/**
 	 * Convert EAttribute to Vertex<V>
 	 * 
@@ -129,7 +129,7 @@ public class ConvertEcore2Graph {
 	 * @return void
 	 */
 	private static void EAttribute2Node(Object o, Graph<String, String> graph) {
-		
+
 		EAttribute eAttribute = (EAttribute)o;
 
 		// Create new vertex for EAtt.
@@ -140,7 +140,7 @@ public class ConvertEcore2Graph {
 
 		// Add EAtt. and corresponding vertex to the HashMap
 		hash.put(eAttribute, vertex);
-		
+
 	}
 
 	/**
@@ -154,24 +154,24 @@ public class ConvertEcore2Graph {
 	 * @return void
 	 */
 	private static void EClass2Node(Object o, Graph<String, String> graph) {
-		
+
 		EClass eClass = (EClass)o;
 
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eClass.getName());
 		vertex.setNumber(graph.getLastIndex());
-		
+
 		graph.addVertex(vertex);
-		
+
 		// Add EClasses to the list in order to iterate later
 		eClasses.add(eClass);
-		
+
 		// Add EAtt. and corresponding vertex to the HashMap
 		hash.put(eClass, vertex);
-		
-		
-		
+
+
+
 	}
 
 	/**
@@ -186,18 +186,18 @@ public class ConvertEcore2Graph {
 	 * @return void
 	 */
 	private static void EReference2Edge(EReference r, EClass c, Graph<String, String> graph) {
-		
+
 		// Get the source vertex from HashMap
 		Vertex<String> source = hash.get(c);
-		
+
 		// Get the target vertex from HashMap
 
 		Vertex<String> target = hash.get(r.getEReferenceType()) ;
-		
+
 		// Create and add edge between source and target vertices
 		graph.addEdge(r.getName(), source.getNumber(), target.getNumber());
 	}
 
-	
+
 
 }
