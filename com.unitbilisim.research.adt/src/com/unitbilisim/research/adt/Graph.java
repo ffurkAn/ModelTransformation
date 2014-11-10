@@ -54,14 +54,14 @@ public class Graph<V,E> {
 	/**
 	 * Set graph's name
 	 * 
-	 * @param name
+	 * @param String - name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/** 
-	 * Returns last index of thi adjacency list 
+	 * Returns last index of the adjacency list 
 	 *
 	 * @return int
 	 */
@@ -72,7 +72,7 @@ public class Graph<V,E> {
 	/**
 	 * Update the last index of adjacency list
 	 * 
-	 * @param lastIndex
+	 * @param int - lastIndex
 	 */
 	public void setLastIndex(int lastIndex) {
 		this.lastIndex = lastIndex;
@@ -81,7 +81,7 @@ public class Graph<V,E> {
 	/**
 	 * Add a vertex to the graph
 	 * 
-	 * @param Vertex<V> v
+	 * @param Vertex<V> - v
 	 *          the Vertex to add
 	 *          
 	 * @return void
@@ -107,7 +107,7 @@ public class Graph<V,E> {
 	/**
 	 * Search the verticies for one with number of vertex.
 	 * 
-	 * @param int number
+	 * @param int - number
 	 *          the vertex number
 	 *          
 	 * @return the first vertex with a matching number, null if no matches are found
@@ -126,7 +126,7 @@ public class Graph<V,E> {
 	/**
 	 * Search the verticies for one with name.
 	 * 
-	 * @param String name 
+	 * @param String - name 
 	 *          the vertex name
 	 * @return the first vertex with a matching name, null if no matches are found
 	 */
@@ -144,13 +144,13 @@ public class Graph<V,E> {
 	/**
 	 * Insert a directed, weighted Edge<T> into the graph.
 	 * 
-	 * @param String name
+	 * @param String - name
 	 * 			edge's name
 	 * 
-	 * @param int from
+	 * @param int - from
 	 *          starting vertex
 	 *          
-	 * @param int to
+	 * @param int - to
 	 *          ending vertex
 	 *          
 	 * @return void
@@ -168,10 +168,10 @@ public class Graph<V,E> {
 	/**
 	 * Is there an edge between source and target verticies
 	 * 
-	 * @param int from
+	 * @param int - from
 	 * 			source vertex
 	 * 
-	 * @param int to
+	 * @param int - to
 	 * 			target vertex
 	 * 
 	 * @return true if there is an edge

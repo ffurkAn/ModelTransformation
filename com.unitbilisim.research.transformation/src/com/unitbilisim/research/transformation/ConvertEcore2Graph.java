@@ -121,11 +121,11 @@ public class ConvertEcore2Graph {
 	/**
 	 * Convert EReference to Edge<E>
 	 * 
-	 * @param EReference r
+	 * @param EReference - r
 	 * 
-	 * @param EClass c
+	 * @param EClass - c
 	 * 
-	 * @param Graph<String, String> graph
+	 * @param Graph<String, String> - graph
 	 *                
 	 * @return void
 	 */
@@ -145,10 +145,10 @@ public class ConvertEcore2Graph {
 	/**
 	 * Convert EAttribute to Vertex<V>
 	 * 
-	 * @param Object o
+	 * @param Object - o
 	 * 			object to be converted
 	 * 
-	 * @param Graph<String, String> graph
+	 * @param Graph<String, String> - graph
 	 *                
 	 * @return void
 	 */
@@ -170,10 +170,10 @@ public class ConvertEcore2Graph {
 	/**
 	 * Convert EClass to Vertex<V>
 	 * 
-	 * @param Object o
+	 * @param Object - o
 	 * 			object to be converted
 	 * 
-	 * @param Graph<String, String> graph
+	 * @param Graph<String, String> - graph
 	 *                
 	 * @return void
 	 */
