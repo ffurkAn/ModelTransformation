@@ -135,7 +135,7 @@ public class ConvertEcore2Graph {
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eAttribute.getEType().getName());
-		vertex.setNumber(graph.getLastIndex());
+		vertex.setNumber(graph.getSize());
 		graph.addVertex(vertex);
 
 		// Add EAtt. and corresponding vertex to the HashMap
@@ -160,7 +160,7 @@ public class ConvertEcore2Graph {
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eClass.getName());
-		vertex.setNumber(graph.getLastIndex());
+		vertex.setNumber(graph.getSize());
 
 		graph.addVertex(vertex);
 

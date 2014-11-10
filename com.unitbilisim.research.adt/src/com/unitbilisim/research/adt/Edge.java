@@ -11,11 +11,6 @@ public class Edge<E> {
 
 	/** Edge's name */
 	private String name;
-
-	/*
-	/** Edge's number * 
-	private int number;
-	*/
 	
 	/** Data which will be kept by the Edge */
 	private E Data; 
@@ -95,26 +90,6 @@ public class Edge<E> {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-
-	/*
-	/**
-	 * Returns number of edge
-	 * 
-	 * @return int
-	 *
-	public int getNumber() {
-		return number;
-	}
-
-	/**
-	 * Set edge's number
-	 * 
-	 * @param int - number
-	 *
-	public void setNumber(int number) {
-		this.number = number;
-	}
-	*/
 
 	/**
 	 * Returns edge's starting vertex number

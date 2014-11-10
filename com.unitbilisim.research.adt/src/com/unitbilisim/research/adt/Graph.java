@@ -22,9 +22,6 @@ public class Graph<V,E> {
 	/** List to present graph */
 	private List<List<Integer>> adjacencyList;
 
-	/** Specifies the last index of verticies */
-	private int lastIndex;
-
 	/** Name of graph */
 	private String name;
 
@@ -34,12 +31,9 @@ public class Graph<V,E> {
 	 */
 	public Graph(){
 
-		lastIndex = -1;
 		verticies = new ArrayList<Vertex<V>>();
 		edges = new ArrayList<Edge<E>>();
 		adjacencyList = new ArrayList<List<Integer>>();
-		//for (int i = 0; i < lastIndex; i++) 
-		//	adjacencyList[i] = new ArrayList<Integer>();
 	}
 
 	/**
@@ -60,24 +54,7 @@ public class Graph<V,E> {
 		this.name = name;
 	}
 
-	/** 
-	 * Returns last index of the adjacency list 
-	 *
-	 * @return int
-	 */
-	public int getLastIndex() {
-		return lastIndex;
-	}
-
-	/**
-	 * Update the last index of adjacency list
-	 * 
-	 * @param int - lastIndex
-	 */
-	public void setLastIndex(int lastIndex) {
-		this.lastIndex = lastIndex;
-	}
-
+	
 	/**
 	 * Add a vertex to the graph
 	 * 
@@ -89,15 +66,11 @@ public class Graph<V,E> {
 	public void addVertex(Vertex<V> v){
 
 		if(findVertexByName(v.getName()) == null){
-
-			//setLastIndex(getLastIndex());
-
+			
 			verticies.add(v);
-			lastIndex++;
-			v.setNumber(lastIndex);
 
 			adjacencyList.add(new ArrayList<Integer>());
-			adjacencyList.get(lastIndex).add(v.getNumber());
+			adjacencyList.get(v.getNumber()).add(v.getNumber());
 
 		}
 
@@ -335,7 +308,10 @@ public class Graph<V,E> {
 	}
 
 
-
+	public int getSize(){
+		
+		return adjacencyList.size();
+	}
 
 	/*
 	private Edge<E> getEdge(Vertex<V> vertex, Vertex<V> targetVertex) {
