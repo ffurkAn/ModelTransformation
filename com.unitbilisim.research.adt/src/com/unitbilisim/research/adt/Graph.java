@@ -39,6 +39,11 @@ public class Graph<T> {
     verticies = new ArrayList<Vertex<T>>();
     edges = new ArrayList<Edge<T>>();
   }
+  
+  public void addEdge(Edge<T> edge){
+	  if(edges.contains(edge) == false)
+		  edges.add(edge);
+  }
 
   /**
    * Are there any verticies in the graph

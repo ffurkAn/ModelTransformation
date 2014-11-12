@@ -190,8 +190,7 @@ public class Vertex<T> {
    * 
    * @return incoming edge list
    */
-  @SuppressWarnings("rawtypes")
-public List getIncomingEdges() {
+  public List<Edge<T>> getIncomingEdges() {
     return this.incomingEdges;
   }
 
@@ -219,8 +218,7 @@ public List getIncomingEdges() {
    * 
    * @return outgoing edge list
    */
-  @SuppressWarnings("rawtypes")
-public List getOutgoingEdges() {
+  public List<Edge<T>> getOutgoingEdges() {
     return this.outgoingEdges;
   }
 
