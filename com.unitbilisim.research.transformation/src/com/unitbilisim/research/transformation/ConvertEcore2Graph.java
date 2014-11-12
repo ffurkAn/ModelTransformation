@@ -71,7 +71,7 @@ public class ConvertEcore2Graph {
 
 			if(o instanceof EClass){		
 				
-				EClass2Node(o,graph);
+				EClass2Vertex(o,graph);
 			}
 
 			if(o instanceof EAttribute){	
@@ -79,7 +79,7 @@ public class ConvertEcore2Graph {
 				// if there is no vertex named EAttribute's EType in graph
 				if(graph.findVertexByName(((EAttribute) o).getEType().getName()) == null){
 
-					EAttribute2Node(o,graph);
+					EAttribute2Vertex(o,graph);
 				}
 			}
 		}
@@ -123,7 +123,7 @@ public class ConvertEcore2Graph {
 		graph.addEdge(source,target, r.getName());
 	}
 
-	private static void EAttribute2Node(Object o, Graph<String> graph) {
+	private static void EAttribute2Vertex(Object o, Graph<String> graph) {
 		// TODO Auto-generated method stub
 
 		EAttribute eAttribute = (EAttribute)o;
@@ -138,7 +138,7 @@ public class ConvertEcore2Graph {
 		
 	}
 
-	private static void EClass2Node(Object o, Graph<String> graph) {
+	private static void EClass2Vertex(Object o, Graph<String> graph) {
 		// TODO Auto-generated method stub
 		EClass eClass = (EClass)o;
 
