@@ -148,8 +148,14 @@ public class Graph<T> {
     
     // If there is not
     else {
-      from.addEdge(e);
-      to.addEdge(e);
+    	
+    	from.addEdge(e);
+    	
+    	if(from != to){
+    		
+    	    to.addEdge(e);
+    	}
+      
       edges.add(e);
       return true;
     }

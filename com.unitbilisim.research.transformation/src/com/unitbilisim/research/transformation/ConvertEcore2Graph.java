@@ -133,7 +133,7 @@ public class ConvertEcore2Graph {
 						
 						// Set edge's ending vertex
 						e.setTo(hash.get(eClass));
-					
+						
 						graph.addEdge(e.getFrom(), hash.get(eClass), e.getName());
 					}
 

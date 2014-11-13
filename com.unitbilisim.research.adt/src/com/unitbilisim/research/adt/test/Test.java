@@ -46,7 +46,7 @@ public class Test {
 		for(Edge<String> e : list){
 			
 			//graph.addEdge(edge);
-			graph.addEdge(v1, v2, e.getName());
+			graph.addEdge(v1, v1, e.getName());
 		}
 		
 		System.out.println(graph.toString());
