@@ -83,44 +83,55 @@ public class ConvertEcore2Graph {
 			if(o instanceof EClass){		
 
 				EClass eClass = (EClass)o;
+				
+				// Convert EClass to Vertex
 				EClass2Vertex(eClass,graph);
 				
+				// Getting all references and convert them to edges
 				for(EReference r : eClass.getEAllReferences()){
 					
+					// If there is a vertex for EReference type but no edge between them
 					if(graph.findVertexByName(r.getEReferenceType().getName()) != null){
 						
-						EReference2Edge(r,hash.get(eClass),graph,false);
+						EReference2Edge(r,eClass,graph,false);
 					}
 					
+					// If there is no vertex for EReference type yet
 					else{
 						
-						EReference2Edge(r,hash.get(eClass),graph,true);
+						EReference2Edge(r,eClass,graph,true);
 					}
 				}		
 
+				// Getting all attributes and convert them to verticies
 				for(EAttribute a : eClass.getEAllAttributes()){
 
 					// if there is no vertex named EAttribute's EType in graph
 					if(graph.findVertexByName(a.getEType().getName()) == null){
 
-						EAttribute2Vertex(a,graph);
-						
+						EAttribute2Vertex(a,graph);		
 					}
 					
+					// Get corresponding vertex for eClass
 					Vertex<String> source = hash.get(eClass);
+					
+					// Get corresponding vertex for EAttribute
 					Vertex<String> target = graph.findVertexByName(a.getEType().getName());
 
 					graph.addEdge(source,target, a.getName());
 					
 				}
 				
-				
+				// If we have reference to this class from another class and
+				// have not added edge between them
 				if(multiMap.containsKey(eClass.getName())){
 
+					// Get all edges which point this class
 					Set<Edge<String>> list = multiMap.get(eClass.getName());
-
+					
 					for(Edge<String> e : list){
 						
+						// Set edge's ending vertex
 						e.setTo(hash.get(eClass));
 					
 						graph.addEdge(e.getFrom(), hash.get(eClass), e.getName());
@@ -132,17 +143,31 @@ public class ConvertEcore2Graph {
 
 		}
 	
-		//System.out.println(multiMap.toString());
 		// Print the Graph
-		System.out.println("\n\n");
 		System.out.println(graph.toString());
 	}
 
-	
+	/**
+	   * If both starting and ending verticies exists add an edge between them
+	   * 
+	   * Else, create and edge put to the multiMap
+	   * 
+	   * @param EReference -
+	   *          
+	   * @param EClass -
+	   * 
+	   * @param Graph<String> - 
+	   * 
+	   * @param Boolean
+	   * 		 	True, if both verticies exist                
+	   * @return void
+	   */
 	private static void EReference2Edge(EReference rContainments,
-			Vertex<String> vertex, Graph<String> graph, boolean b) {
+			EClass eClass, Graph<String> graph, boolean b) {
 		// TODO Auto-generated method stub
 
+		Vertex<String> vertex = hash.get(eClass);
+		
 		if(b == true){
 			Edge<String> edge = new Edge<String>();
 
@@ -159,30 +184,41 @@ public class ConvertEcore2Graph {
 			
 		}
 
-		//graph.addEdge(edge);
 	}
 
 
 
+	/**
+	   * Convert EClass to Vertex and add to Graph
+	   * 
+	   * @param EClass -
+	   *         
+	   * @param Graph<String> -
+	   *                 
+	   * @return void
+	   */
 	private static void EClass2Vertex(EClass eClass, Graph<String> graph) {
 		// TODO Auto-generated method stub
 
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eClass.getName());
+		vertex.visit();
 		graph.addVertex(vertex);
 
 		hash.put(eClass, vertex);
-
-		// Add EClasses to the list in order to iterate later
-		//eClasses.add(eClass);
-
-		// Add EAtt. and corresponding vertex to the HashMap
-		//hash.put(eClass, vertex);
-
 	}
 
-	
+
+	/**
+	   * Convert EAttribute to Vertex and put to the hash map
+	   * 
+	   * @param EAttribute -
+	   *          
+	   * @param Graph<String> -
+	   *                 
+	   * @return void
+	   */
 	private static void EAttribute2Vertex(EAttribute eAttribute, Graph<String> graph) {
 		// TODO Auto-generated method stub
 

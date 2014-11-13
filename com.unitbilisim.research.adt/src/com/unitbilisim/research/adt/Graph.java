@@ -141,8 +141,12 @@ public class Graph<T> {
       throw new IllegalArgumentException("to is not in graph");
 
     Edge<T> e = new Edge<T>(from, to, name);
+    
+    // If there is an edge between to verticies with same name, no matter the direction
     if (from.findEdge(e) != null)
       return false;
+    
+    // If there is not
     else {
       from.addEdge(e);
       to.addEdge(e);
