@@ -258,7 +258,7 @@ public class Vertex<T> {
     	
     else{
     	
-      return null;
+	      return null;
       }
     
   }
