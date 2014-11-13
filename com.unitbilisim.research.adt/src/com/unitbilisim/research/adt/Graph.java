@@ -136,14 +136,14 @@ public class Graph<T> {
       throw new IllegalArgumentException("to is not in graph");
 
     Edge<T> e = new Edge<T>(from, to, name);
-    if (from.findEdge(to) != null)
-      return false;
-    else {
+    //if (from.findEdge(to) != null)
+      //return false;
+    //else {
       from.addEdge(e);
       to.addEdge(e);
       edges.add(e);
       return true;
-    }
+    //}
   }
 
   /**

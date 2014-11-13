@@ -1,7 +1,9 @@
 package com.unitbilisim.research.adt.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.unitbilisim.research.adt.Edge;
 import com.unitbilisim.research.adt.Graph;
 import com.unitbilisim.research.adt.Vertex;
 
@@ -11,38 +13,40 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		//
-		//
-		//
-		Graph<String> myGraph = new Graph<String>();
+		Graph<String> graph = new  Graph<String>(); 
+		List<Edge<String>> list = new ArrayList<Edge<String>>();
 		
-		myGraph.addVertex(new Vertex<String>("A","unit"));
-		myGraph.addVertex(new Vertex<String>("B","ferhat"));
-		myGraph.addVertex(new Vertex<String>("C","omer"));
-		myGraph.addVertex(new Vertex<String>("D","furkan"));
-		/*
-		myGraph.addEdge(myGraph.getVertex(0), myGraph.getVertex(1),0);
-		myGraph.addEdge(myGraph.getVertex(0), myGraph.getVertex(2),0);		
-		myGraph.addEdge(myGraph.getVertex(1), myGraph.getVertex(2),0);
-		myGraph.addEdge(myGraph.getVertex(3), myGraph.getVertex(1),0);	
-		myGraph.insertBiEdge(myGraph.findVertexByData("unit", new ComparatorA<String>()), myGraph.findVertexByName("D"), 0);
-		*/
-		System.out.println(myGraph.findVertexByData("unit", new ComparatorA<String>()).getName());
-		System.out.println(myGraph.findVertexByName("D").getName());
+		Edge<String> e1 = new Edge<String>();
+		Edge<String> e2 = new Edge<String>();
+		Edge<String> e3 = new Edge<String>();
+		e1.setName("1");
+		e2.setName("2");
+		e3.setName("3");
 		
-		@SuppressWarnings("unused")
-		List<Vertex<String>> list = myGraph.getVerticies();
+		list.add(e1);
+		list.add(e2);
+		list.add(e3);
 		
-		/*
-		for(Vertex<String> v : list){
-			System.out.println(v.getName());
+		Vertex<String> v1 = new Vertex<String>();
+		Vertex<String> v2 = new Vertex<String>();
+		Vertex<String> v3 = new Vertex<String>();
+		
+		v1.setName("v1");
+		v3.setName("v3");
+		
+		v2.setName("v2");
+		
+		graph.addVertex(v3);
+		graph.addVertex(v2);
+		graph.addVertex(v1);
+		
+		for(Edge<String> e : list){
+			
+			//graph.addEdge(edge);
+			graph.addEdge(v1, v2, e.getName());
 		}
-		*/
 		
-		//System.out.println(myGraph.toString());
-		//System.out.println("testing");
-		
-		//myGraph.dfsSpanningTree(myGraph.getRootVertex(), );
+		System.out.println(graph.toString());
 	}
 
 }
