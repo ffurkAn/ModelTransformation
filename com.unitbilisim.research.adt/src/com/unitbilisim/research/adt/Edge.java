@@ -39,12 +39,6 @@ public class Edge<T> {
     this.name = name;
     mark = false;
   }
-
-  public Edge(Vertex<T> from, String name) {
-	    this.from = from;
-	    this.name = name;
-	    mark = false;
-	  }
   
   /**
    * Get the ending vertex

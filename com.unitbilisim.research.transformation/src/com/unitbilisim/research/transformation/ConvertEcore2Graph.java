@@ -83,23 +83,24 @@ public class ConvertEcore2Graph {
 			if(o instanceof EClass){		
 
 				EClass eClass = (EClass)o;
-				Vertex<String> v = EClass2Vertex(eClass,graph);
+				EClass2Vertex(eClass,graph);
 
 				
-				/*
+				
 				for(EReference r : eClass.getEAllReferences()){
-
-					EReference2Edge(r,v,graph,false);
+					
+					EReference2Edge(r,hash.get(eClass),graph,false);
 				}
-				*/
+				
 				
 				// 
 				
+				
 				/*
-				for(EReference rContainments : eClass.getEAllContainments()){
+				for(EReference rContainments : eClass.getEReferences()){
 
-					System.out.println(rContainments.getEReferenceType().getName());
-					EReference2Edge(rContainments, v, graph, true);
+					System.out.println(rContainments.getName());
+					//EReference2Edge(rContainments, hash.get(eClass), graph, true);
 				}
 				*/
 
@@ -119,7 +120,7 @@ public class ConvertEcore2Graph {
 					
 				}
 				
-				/*
+				
 				if(multiMap.containsKey(eClass.getName())){
 
 					Set<Edge<String>> list = multiMap.get(eClass.getName());
@@ -127,13 +128,17 @@ public class ConvertEcore2Graph {
 					for(Edge<String> e : list){
 						
 						e.setTo(hash.get(eClass));
+						System.out.println(e.getFrom().getName());
+						
 						System.out.println(e.getTo().getName());
+						System.out.println(e.getName());
+						
 						//graph.addEdge(edge);
 						graph.addEdge(e.getFrom(), hash.get(eClass), e.getName());
 					}
 
 				}
-				 */
+				 
 
 
 
@@ -147,13 +152,13 @@ public class ConvertEcore2Graph {
 
 		}
 		
-		
+		/*
 		for(Vertex<String> v : graph.getVerticies()){
 			
-			System.out.println(v.toString()+"\n");
+			System.out.println(v.toString());
 			
 		}
-
+*/
 		/*
 		// Adding edges between vertices
 		for(EClass c : eClasses){
@@ -180,7 +185,7 @@ public class ConvertEcore2Graph {
 		//System.out.println(multiMap.toString());
 		// Print the Graph
 		System.out.println("\n\n");
-		System.out.println(graph.toString());
+		//System.out.println(graph.toString());
 
 	}
 
@@ -189,51 +194,15 @@ public class ConvertEcore2Graph {
 	private static void EReference2Edge(EReference rContainments,
 			Vertex<String> vertex, Graph<String> graph, boolean b) {
 		// TODO Auto-generated method stub
-		
-		Edge<String> edge = new Edge<String>();
-		
-		// Vertexe gelen referans varsa
-		if(b == true){
-			
-			edge.setTo(vertex);
-			edge.setName(rContainments.getName());
-			multiMap.put(vertex.getName(), edge);
-		}
-		// Yoksa
-		else{
-			
-			edge.setFrom(vertex);
-			edge.setName(rContainments.getName());
-			multiMap.put(vertex.getName(), edge);
-		}
-		
-		//graph.addEdge(edge);
-	}
-	
-	private static void EReference2Edge(EReference r, Vertex<String> vertex,
-			Graph<String> graph) {
-		// TODO Auto-generated method stub
 
 		Edge<String> edge = new Edge<String>();
+
 		edge.setFrom(vertex);
-		edge.setName(r.getName());
+		edge.setName(rContainments.getName());
+		multiMap.put(rContainments.getEReferenceType().getName(), edge);
 
-		multiMap.put(r.getEReferenceType().getName(), edge);
 
 		//graph.addEdge(edge);
-
-
-		//
-		//
-		// Get the source vertex from HashMap
-		//Vertex<String> source = hash.get(c);
-
-		// Get the target vertex from HashMap
-
-		//Vertex<String> target = hash.get(r.getEReferenceType()) ;
-
-		// Create and add edge between source and target vertices
-		//graph.addEdge(source,target, r.getName());
 	}
 
 
@@ -258,7 +227,7 @@ public class ConvertEcore2Graph {
 
 
 
-	private static Vertex<String> EClass2Vertex(EClass eClass, Graph<String> graph) {
+	private static void EClass2Vertex(EClass eClass, Graph<String> graph) {
 		// TODO Auto-generated method stub
 
 		// Create new vertex for EAtt.
@@ -274,7 +243,6 @@ public class ConvertEcore2Graph {
 		// Add EAtt. and corresponding vertex to the HashMap
 		//hash.put(eClass, vertex);
 
-		return vertex;
 	}
 
 	
