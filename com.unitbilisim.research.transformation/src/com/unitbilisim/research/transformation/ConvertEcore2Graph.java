@@ -27,7 +27,8 @@ import com.unitbilisim.research.adt.Vertex;
  * Class to convert .ecore metamodel to a Graph instance 
  * using java Graph structure 
  * 
- * @author Scott.Stark@jboss.org
+ * @author ffurkan.tanriverdi@gmail.com
+ * 		   furkan.tanriverdi@unitbilisim.com
  */
 public class ConvertEcore2Graph {
 
