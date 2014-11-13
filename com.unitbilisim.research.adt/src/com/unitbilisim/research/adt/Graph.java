@@ -122,7 +122,7 @@ public class Graph<T> {
   }
 
   /**
-   * Insert a directed, weighted Edge<T> into the graph.
+   * Insert a directed edge, if there was not added before.
    * 
    * @param from -
    *          the Edge<T> starting vertex
@@ -141,7 +141,7 @@ public class Graph<T> {
       throw new IllegalArgumentException("to is not in graph");
 
     Edge<T> e = new Edge<T>(from, to, name);
-    if (from.findEdge(to) != null)
+    if (from.findEdge(e) != null)
       return false;
     else {
       from.addEdge(e);

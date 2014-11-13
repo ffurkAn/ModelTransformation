@@ -128,21 +128,11 @@ public class ConvertEcore2Graph {
 					for(Edge<String> e : list){
 						
 						e.setTo(hash.get(eClass));
-						System.out.println(e.getFrom().getName());
-						
-						System.out.println(e.getTo().getName());
-						System.out.println(e.getName());
-						
-						//graph.addEdge(edge);
+					
 						graph.addEdge(e.getFrom(), hash.get(eClass), e.getName());
 					}
 
-				}
-				 
-
-
-
-
+				}			
 
 			}
 
@@ -185,7 +175,7 @@ public class ConvertEcore2Graph {
 		//System.out.println(multiMap.toString());
 		// Print the Graph
 		System.out.println("\n\n");
-		//System.out.println(graph.toString());
+		System.out.println(graph.toString());
 
 	}
 
