@@ -84,25 +84,19 @@ public class ConvertEcore2Graph {
 
 				EClass eClass = (EClass)o;
 				EClass2Vertex(eClass,graph);
-
-				
 				
 				for(EReference r : eClass.getEAllReferences()){
 					
-					EReference2Edge(r,hash.get(eClass),graph,false);
-				}
-				
-				
-				// 
-				
-				
-				/*
-				for(EReference rContainments : eClass.getEReferences()){
-
-					System.out.println(rContainments.getName());
-					//EReference2Edge(rContainments, hash.get(eClass), graph, true);
-				}
-				*/
+					if(graph.findVertexByName(r.getEReferenceType().getName()) != null){
+						
+						EReference2Edge(r,hash.get(eClass),graph,false);
+					}
+					
+					else{
+						
+						EReference2Edge(r,hash.get(eClass),graph,true);
+					}
+				}		
 
 				for(EAttribute a : eClass.getEAllAttributes()){
 
@@ -136,83 +130,36 @@ public class ConvertEcore2Graph {
 
 			}
 
-
-
-
-
 		}
-		
-		/*
-		for(Vertex<String> v : graph.getVerticies()){
-			
-			System.out.println(v.toString());
-			
-		}
-*/
-		/*
-		// Adding edges between vertices
-		for(EClass c : eClasses){
-
-			for(EReference r : c.getEAllReferences()){
-
-				EReference2Edge(r,c,graph);
-			}
-
-			for(EAttribute a : c.getEAllAttributes()){
-
-				Vertex<String> source = hash.get(c);
-				Vertex<String> target = graph.findVertexByName(a.getEType().getName());
-
-				graph.addEdge(source,target, a.getName());
-
-
-			}
-		}
-
-		 */
-
-		
+	
 		//System.out.println(multiMap.toString());
 		// Print the Graph
 		System.out.println("\n\n");
 		System.out.println(graph.toString());
-
 	}
 
-
-
+	
 	private static void EReference2Edge(EReference rContainments,
 			Vertex<String> vertex, Graph<String> graph, boolean b) {
 		// TODO Auto-generated method stub
 
-		Edge<String> edge = new Edge<String>();
+		if(b == true){
+			Edge<String> edge = new Edge<String>();
 
-		edge.setFrom(vertex);
-		edge.setName(rContainments.getName());
-		multiMap.put(rContainments.getEReferenceType().getName(), edge);
+			edge.setFrom(vertex);
+			edge.setName(rContainments.getName());
+			multiMap.put(rContainments.getEReferenceType().getName(), edge);
 
+		}
+		else{
+			Vertex<String> to = graph.findVertexByName(
+					rContainments.getEReferenceType().getName());
+			
+			graph.addEdge(vertex, to, rContainments.getName());
+			
+		}
 
 		//graph.addEdge(edge);
-	}
-
-
-
-
-	private static void addEdge(EAttribute a, EClass eClass, Graph<String> graph) {
-		// TODO Auto-generated method stub
-
-		Vertex<String> source = hash.get(eClass);
-		Vertex<String> target = hash.get(a);
-
-		/*
-		Edge<String> edge = new Edge<String>();
-		edge.setFrom(source);
-		edge.setTo(target);
-		edge.setName(a.getName());
-		*/
-		
-		graph.addEdge(source, target, a.getName());
-
 	}
 
 
