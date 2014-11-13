@@ -247,10 +247,20 @@ public List getOutgoingEdges() {
    * @return e if its a member of the outgoing edges, null otherwise.
    */
   public Edge<T> findEdge(Edge<T> e) {
-    if (outgoingEdges.contains(e))
-      return e;
-    else
-      return null;
+	  if (outgoingEdges.contains(e)){
+	        
+	    	return e;
+	    }
+	    
+	    else if(incomingEdges.contains(e)){
+	    	
+	    	return e;
+	    }
+	    	
+	    else{
+	    	
+	      return null;
+	      }
   }
 
   /**
