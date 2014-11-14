@@ -16,10 +16,11 @@ public class Edge<T> {
 
 	private String name;
 
+	/*
 	private boolean mark;
 
 	private int cost;
-
+	 */
 
 	public Edge(){
 
@@ -39,7 +40,7 @@ public class Edge<T> {
 		this.from = from;
 		this.to = to;
 		this.name = name;
-		mark = false;
+		//mark = false;
 	}
 
 	/**

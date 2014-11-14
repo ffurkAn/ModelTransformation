@@ -8,17 +8,28 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="lastElement" eType="#//Element"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="testPointer" eType="#//List"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packagePointer" eType="#//TestPackage/Test"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Element">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="0"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subElements" eType="#//List"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subTestPointer" eType="#//TestPackage/SubTestPackage/SubTest"
+        eOpposite="#//TestPackage/SubTestPackage/SubTest/elementPointer"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Test">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listPointer" upperBound="-1"
-        eType="#//List"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elementPointer" eType="#//Element"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="associationWith" eType="#//Test"/>
-  </eClassifiers>
+  <eSubpackages name="TestPackage" nsURI="TestPackage" nsPrefix="TestPackage">
+    <eClassifiers xsi:type="ecore:EClass" name="Test">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="elementPointer" eType="#//Element"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="elementPointer2" eType="#//Element"/>
+    </eClassifiers>
+    <eSubpackages name="SubTestPackage" nsURI="SubTestPackage" nsPrefix="SubTestPackage">
+      <eClassifiers xsi:type="ecore:EClass" name="SubTest">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="elementPointer" eType="#//Element"
+            eOpposite="#//Element/subTestPointer"/>
+      </eClassifiers>
+    </eSubpackages>
+  </eSubpackages>
 </ecore:EPackage>
