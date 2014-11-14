@@ -3,5 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: com.unitbilisim.research.transformation
 Bundle-SymbolicName: com.unitbilisim.research.transformation; singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Require-Bundle: org.eclipse.emf.ecore
+Require-Bundle: org.eclipse.emf.ecore,
+ com.google.guava,
+ org.eclipse.emf.common,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi
 Import-Package: org.eclipse.emf.ecore.xmi.impl

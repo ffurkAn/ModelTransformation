@@ -1,6 +1,8 @@
 package com.unitbilisim.research.transformation;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +17,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import com.google.common.collect.HashMultimap;
 import com.unitbilisim.research.adt.Edge;
@@ -32,7 +36,7 @@ import com.unitbilisim.research.adt.Vertex;
  */
 public class ConvertEcore2Graph {
 
-	private static Resource resource;
+	private static XMIResource resource;
 
 	// HashMap tos store
 	static HashMap<EObject,Vertex<String>> hash = new HashMap<EObject, Vertex<String>>();
@@ -50,27 +54,56 @@ public class ConvertEcore2Graph {
 		// Register the XMI resource factory for the .graph extension
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("ecore", new XMIResourceFactoryImpl());
+		m.put("xmi", new XMIResourceFactoryImpl());
 
 		// Obtain a new resource set
-		ResourceSet resSet = new ResourceSetImpl();
+		//ResourceSet resSet = new ResourceSetImpl();
+		
 
 		// Get the resource
-		resource = resSet.getResource(URI.createURI("Model/My.ecore"), true);
+		//resource = resSet.getResource(URI.createURI("Model/My.ecore"), true);
 
+		//--------------------------
+		
+		  URI uri=URI.createURI("Model/Collection.xmi");
+
+		XMIResource xmiResource=new XMIResourceImpl(uri);
+		
+		  System.out.println(xmiResource.getContents().get(0));
+		
+		try {
+			xmiResource.save(System.out, Collections.EMPTY_MAP);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		Iterator<EObject> resourceObjects = xmiResource.getAllContents();
+		
+		
+		while (resourceObjects.hasNext()) {
+			Object o = resourceObjects.next();
+			
+			System.out.println(o);
+		}
+		
+		
+		
+		
 		// Save the resource
 		/*
 		try 
 		{ 
-			//resource.save(System.out, Collections.EMPTY_MAP); 
-			resource.save(Collections.EMPTY_MAP); 
+			resource.save(System.out, Collections.EMPTY_MAP); 
+			//resource.save(Collections.EMPTY_MAP); 
 		} 
 		catch (IOException e) {
-			System.out.println("ERROR! Saving Resource ")} 
+			System.out.println("ERROR! Saving Resource ");} 
 		 */
 
 		// Get EObjects source
-		Iterator<EObject> resourceObjects = resource.getAllContents();		
+		//Iterator<EObject> resourceObjects = resource.getAllContents();		
 
 		// Create a new Graph instance
 		Graph<String> graph = new Graph<String>();
@@ -78,6 +111,8 @@ public class ConvertEcore2Graph {
 
 		// Find all EClass and EAttributes(EAttributes should have different EType)
 		// and create corresponding vertex
+		
+		/*
 		while (resourceObjects.hasNext()) {
 			Object o = resourceObjects.next();
 
@@ -144,8 +179,9 @@ public class ConvertEcore2Graph {
 
 		} // End while
 
+		*/
 		// Print the Graph
-		System.out.println(graph.toString());
+		// System.out.println(graph.toString());
 	}
 
 	/**
