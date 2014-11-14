@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -19,7 +17,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import com.google.common.collect.HashMultimap;
 import com.unitbilisim.research.adt.Edge;
@@ -51,44 +48,26 @@ public class ConvertEcore2Graph {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		// Register the XMI resource factory for the .graph extension
+		//JavaPackage.eINSTANCE.eClass();
+
+		// Register the XMI resource factory for the .xmi extension
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("xmi", new XMIResourceFactoryImpl());
+		reg.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 
 		// Obtain a new resource set
-		//ResourceSet resSet = new ResourceSetImpl();
-		
+		ResourceSet resourceSet = new ResourceSetImpl();
 
 		// Get the resource
-		//resource = resSet.getResource(URI.createURI("Model/My.ecore"), true);
+		URI uri = URI.createFileURI("Model/List.xmi");
+		Resource resource = resourceSet.getResource(uri, true);
 
-		//--------------------------
-		
-		  URI uri=URI.createURI("Model/Collection.xmi");
-
-		XMIResource xmiResource=new XMIResourceImpl(uri);
-		
-		  System.out.println(xmiResource.getContents().get(0));
-		
+	
 		try {
-			xmiResource.save(System.out, Collections.EMPTY_MAP);
-		} catch (IOException e1) {
+			resource.save(System.out, Collections.EMPTY_MAP);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		
-		Iterator<EObject> resourceObjects = xmiResource.getAllContents();
-		
-		
-		while (resourceObjects.hasNext()) {
-			Object o = resourceObjects.next();
-			
-			System.out.println(o);
-		}
-		
-		
 		
 		
 		// Save the resource
