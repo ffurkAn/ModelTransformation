@@ -3,7 +3,7 @@ package com.unitbilisim.research.adt;
 /**
  * A directed, weighted edge in a graph
  * 
- * @author ffurkan.tanriverdi@gmail.com
+ * @author ffurkan.tanriverdi@gmail.com,
  * 		   furkan.tanriverdi@unitbilisim.com
  * @version $Revision$
  * @param <T>

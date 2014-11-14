@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A named graph vertex with optional data.
  * 
- * @author ffurkan.tanriverdi@gmail.com
+ * @author ffurkan.tanriverdi@gmail.com,
  * 		   furkan.tanriverdi@unitbilisim.com
  * @version $Revision$
  * @param <T>
@@ -19,8 +19,10 @@ public class Vertex<T> {
 
 	private String name;
 
+	@SuppressWarnings("unused")
 	private boolean mark;
 
+	@SuppressWarnings("unused")
 	private int markState;
 
 	private T data;

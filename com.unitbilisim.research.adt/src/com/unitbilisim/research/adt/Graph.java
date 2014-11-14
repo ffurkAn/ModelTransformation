@@ -1,14 +1,12 @@
 package com.unitbilisim.research.adt;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * A directed graph data structure.
  * 
- * @author ffurkan.tanriverdi@gmail.com
+ * @author ffurkan.tanriverdi@gmail.com,
  * 		   furkan.tanriverdi@unitbilisim.com
  * @version $Revision$
  * @param <T>
@@ -30,6 +28,7 @@ public class Graph<T> {
 	private List<Edge<T>> edges;
 
 	/** The vertex identified as the root of the graph */
+	@SuppressWarnings("unused")
 	private Vertex<T> rootVertex;
 
 	/**

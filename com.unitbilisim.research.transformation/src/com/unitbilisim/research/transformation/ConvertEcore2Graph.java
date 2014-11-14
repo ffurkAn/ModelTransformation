@@ -1,6 +1,8 @@
 package com.unitbilisim.research.transformation;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -27,7 +30,7 @@ import com.unitbilisim.research.adt.Vertex;
  * Class to convert .ecore metamodel to a Graph instance 
  * using java Graph structure 
  * 
- * @author ffurkan.tanriverdi@gmail.com
+ * @author ffurkan.tanriverdi@gmail.com,
  * 		   furkan.tanriverdi@unitbilisim.com
  */
 public class ConvertEcore2Graph {
@@ -40,7 +43,7 @@ public class ConvertEcore2Graph {
 	// MultiMap to store Vertex and unconnected edges to that
 	public static HashMultimap<String, Edge<String>> multiMap = HashMultimap.create();
 
-	// Get EClasses
+	// List to store EClasses
 	static List<EClass> eClasses = new ArrayList<EClass>();
 
 
@@ -62,12 +65,13 @@ public class ConvertEcore2Graph {
 		/*
 		try 
 		{ 
-			//resource.save(System.out, Collections.EMPTY_MAP); 
-			resource.save(Collections.EMPTY_MAP); 
+			resource.save(System.out, Collections.EMPTY_MAP); 
+			//resource.save(Collections.EMPTY_MAP); 
 		} 
 		catch (IOException e) {
-			System.out.println("ERROR! Saving Resource ")} 
-		 */
+			System.out.println("ERROR! Saving Resource ");
+			} 
+		*/ 
 
 		// Get EObjects source
 		Iterator<EObject> resourceObjects = resource.getAllContents();		
@@ -120,6 +124,11 @@ public class ConvertEcore2Graph {
 					Vertex<String> target = graph.findVertexByName(a.getEType().getName());
 
 					graph.addEdge(source,target, a.getName());
+					
+					if(a.getEType() instanceof EEnum){
+						
+						EEnum2Vertex(a,graph);
+					}
 
 				}
 
@@ -141,11 +150,18 @@ public class ConvertEcore2Graph {
 				}		
 
 			} // End if
+			
+			
 
 		} // End while
 
 		// Print the Graph
 		System.out.println(graph.toString());
+	}
+
+	private static void EEnum2Vertex(EAttribute a, Graph<String> graph) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -202,7 +218,7 @@ public class ConvertEcore2Graph {
 		// Create new vertex for EAtt.
 		Vertex<String> vertex = new Vertex<String>();
 		vertex.setName(eClass.getName());
-		vertex.visit();
+		//vertex.visit();
 		
 		graph.addVertex(vertex);
 
