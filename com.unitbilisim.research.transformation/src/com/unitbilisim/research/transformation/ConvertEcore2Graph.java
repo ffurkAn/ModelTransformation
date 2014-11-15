@@ -1,24 +1,26 @@
 package com.unitbilisim.research.transformation;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-import org.eclipse.emf.common.util.URI;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.google.common.collect.HashMultimap;
 import com.unitbilisim.research.adt.Edge;
@@ -35,7 +37,9 @@ import com.unitbilisim.research.adt.Vertex;
  */
 public class ConvertEcore2Graph {
 
-	private static XMIResource resource;
+	private static XMIResource xmiResource;
+	
+	private static Resource resource;
 
 	// HashMap tos store
 	static HashMap<EObject,Vertex<String>> hash = new HashMap<EObject, Vertex<String>>();
@@ -47,47 +51,64 @@ public class ConvertEcore2Graph {
 	static List<EClass> eClasses = new ArrayList<EClass>();
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
+		/*
+		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+		Map<String, Object> m = reg.getExtensionToFactoryMap();
+		m.put("xmi", new XMIResourceFactoryImpl());
 
-	    // Register the XMI resource factory for the .website extension
+		ResourceSet resSet = new ResourceSetImpl();
+		resource = resSet.getResource(URI.createURI("model/List.xmi"), true);
+		// resource.load(Collections.EMPTY_MAP);
 
-	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-	    Map<String, Object> m = reg.getExtensionToFactoryMap();
-	    m.put("xmi", new XMIResourceFactoryImpl());
+		for (EObject eo : resource.getContents()) {
+			System.out.println(eo);
+		}
 
-	    // Obtain a new resource set
-	    ResourceSet resSet = new ResourceSetImpl();
-	    //XMIResourceImpl resSet = new XMIResourceImpl();
+*/
+		 
 
-
-	    // create a resource
-	    Resource resource = resSet.createResource(URI.createURI("Model/List.xmi"));
-	    // Get the first model element and cast it to the right type, in my
-	    // example everything is hierarchical included in this first node
-	     System.out.println(resource.getContents());
-	     System.out.println("rs: " + resource);
-	     
-	     EPackage.Registry reg1;
-	     reg1 = resSet.getPackageRegistry();
-			System.out.println("registry: " + reg1);
-			System.out.println("EcorePackage.eNS_URI: " + EcorePackage.eNS_URI);
-			System.out.println("EcorePackage.eINSTANCE: " + URI.createFileURI("c:/Users/2/My Repository/UNIT Research and Development/"
-					+ "com.unitbilisim.research.transformation/model/List.xmi"));
-			reg1.put(EcorePackage.eNS_URI, URI.createFileURI("c:/Users/2/My Repository/UNIT Research and Development/"
-					+ "com.unitbilisim.research.transformation/model/List.xmi"));
-			
+	
+	    /*
+		xmiResource = new XMIResourceImpl(URI.createURI("model/List.xmi"));
+		//resource.load(null);
 		
-	    // now save the content.
-	   /*
-		try {
-	      resource.save(System.out, Collections.EMPTY_MAP);
-	    } catch (IOException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-	    }
+		for (EObject eo : resource.getContents()) {
+		      System.out.println(eo);
+		    }
+		
 		*/
+		
+		// PARSER
+		
+		try {
+			 
+			File fXmlFile = new File("model/List.xmi");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+		 
+			//optional, but recommended
+			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+			doc.getDocumentElement().normalize();
+		 
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+		 
+		 
+			NodeList nodeList = doc.getElementsByTagName("*");
+		    for (int i = 0; i < nodeList.getLength(); i++) {
+		        Node node = nodeList.item(i);
+		        if (node.getNodeType() == Node.ELEMENT_NODE) {
+		            // do something with the current element
+		            System.out.println(node.getNodeName());
+		        }
+		    }
+		    
+		    } catch (Exception e) {
+			e.printStackTrace();
+		    }
 		
 		// Save the resource
 		/*
@@ -100,8 +121,9 @@ public class ConvertEcore2Graph {
 			System.out.println("ERROR! Saving Resource ");} 
 		 */
 
+/*		
 		// Get EObjects source
-		//Iterator<EObject> resourceObjects = resource.getAllContents();		
+		Iterator<EObject> resourceObjects = resource.getAllContents();		
 
 		// Create a new Graph instance
 		Graph<String> graph = new Graph<String>();
@@ -110,7 +132,7 @@ public class ConvertEcore2Graph {
 		// Find all EClass and EAttributes(EAttributes should have different EType)
 		// and create corresponding vertex
 		
-		/*
+		
 		while (resourceObjects.hasNext()) {
 			Object o = resourceObjects.next();
 
@@ -177,7 +199,7 @@ public class ConvertEcore2Graph {
 
 		} // End while
 
-		*/
+*/
 		// Print the Graph
 		// System.out.println(graph.toString());
 	}
