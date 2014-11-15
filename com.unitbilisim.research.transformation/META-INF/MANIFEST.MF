@@ -10,4 +10,7 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.ui,
  org.eclipse.core.runtime
-Import-Package: org.eclipse.emf.ecore.xmi.impl
+Import-Package: org.eclipse.emf.ecore.xmi.impl,
+ org.eclipse.uml2.uml,
+ org.eclipse.uml2.uml.ecore.importer.ui,
+ org.eclipse.uml2.uml.resource

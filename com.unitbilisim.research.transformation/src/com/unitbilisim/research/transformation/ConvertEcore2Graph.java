@@ -1,32 +1,28 @@
 package com.unitbilisim.research.transformation;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.google.common.collect.HashMultimap;
 import com.unitbilisim.research.adt.Edge;
 import com.unitbilisim.research.adt.Graph;
 import com.unitbilisim.research.adt.Vertex;
-
 
 /**
  * Class to convert .ecore metamodel to a Graph instance 
@@ -54,6 +50,23 @@ public class ConvertEcore2Graph {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
+		EPackage.Registry reg = EPackage.Registry.INSTANCE;
+		EPackage m = reg.getEPackage("my");
+	
+		System.out.println(m.toString());
+		
+		/*
+		ResourceSet myResourceSet = new ResourceSetImpl();
+		ExtendedMetaData modelMetaData = new BasicExtendedMetaData(myResourceSet.getPackageRegistry());
+
+		EClass List = (EClass) modelMetaData.getType("my", "Collection");
+		
+		EStructuralFeature nameAttr = modelMetaData.getElement(List, null, "name");
+		
+		System.out.println("attr: " + modelMetaData.getNamespace(nameAttr) + ":" + nameAttr.getName());
+		
+		*/
+		
 		/*
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		Map<String, Object> m = reg.getExtensionToFactoryMap();
@@ -68,9 +81,65 @@ public class ConvertEcore2Graph {
 		}
 
 */
-		 
+		
+		////////////
+		/*
+		URI uri = URI.createURI("model/Collection.xmi");
 
-	
+				try {
+
+					ResourceSet resourceSet = new ResourceSetImpl();
+
+					// register UML
+					Map packageRegistry = resourceSet.getPackageRegistry();
+					packageRegistry.put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
+
+					// Register XML resource as UMLResource.Factory.Instance
+					Map extensionFactoryMap = Resource.Factory.Registry.INSTANCE
+							.getExtensionToFactoryMap();
+					extensionFactoryMap.put(UMLResource.FILE_EXTENSION,
+							UMLResource.Factory.INSTANCE);
+					extensionFactoryMap.put("xmi", UMLResource.Factory.INSTANCE);
+
+					Resource resource = (Resource) resourceSet.createResource(uri);
+
+					// try to load the file into resource
+					resource.load(null);
+					System.out.println("XMI Resource has "
+							+ resource.getContents().size() + " objects.");
+					for (EObject obj : resource.getContents()) {
+
+						System.out.println(obj.toString());
+					}
+				}// end of try
+				catch (NullPointerException | IOException e) {
+					e.printStackTrace();
+				}
+		
+		*/
+		//MyPackage.eINSTANCE.eClass();
+
+		/*
+		// Register the XMI resource factory for the .xmi extension
+		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+		reg.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+
+		// Obtain a new resource set
+		ResourceSetImpl resourceSet = new ResourceSetImpl();
+
+		// Get the resource
+		URI uri = URI.createFileURI("C:/..../simple.java_java.xmi");
+		Resource resource = resourceSet.getResource(uri, true);
+		
+		Model javaModel = (Model) resource.getContents().get(0);
+
+		//Read the top-packages contained in the model
+		EList<Package> pagckages = javaModel.;
+		for (Package p : pagckages) {
+			System.out.println(p.getName());
+		}
+
+	*/
 	    /*
 		xmiResource = new XMIResourceImpl(URI.createURI("model/List.xmi"));
 		//resource.load(null);
@@ -83,9 +152,10 @@ public class ConvertEcore2Graph {
 		
 		// PARSER
 		
+				/*
 		try {
 			 
-			File fXmlFile = new File("model/List.xmi");
+			File fXmlFile = new File("model/Collection.xmi");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -94,7 +164,7 @@ public class ConvertEcore2Graph {
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
 		 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName()+"\n");
 		 
 		 
 			NodeList nodeList = doc.getElementsByTagName("*");
@@ -102,13 +172,39 @@ public class ConvertEcore2Graph {
 		        Node node = nodeList.item(i);
 		        if (node.getNodeType() == Node.ELEMENT_NODE) {
 		            // do something with the current element
-		            System.out.println(node.getNodeName());
+		        	
+		        	EClass c = (EClass)node.getClass();
+		        	
 		        }
 		    }
 		    
 		    } catch (Exception e) {
 			e.printStackTrace();
 		    }
+		
+		*/
+		////
+		
+				
+		/*
+		// generate EPackages from schemas
+		XSDEcoreBuilder xsdEcoreBuilder = new XSDEcoreBuilder();
+		Collection generatedPackages = xsdEcoreBuilder.generate(schemaURI);
+
+		// register the packages loaded from XSD
+		for (EObject generatedEObject : generatedPackages) {
+		    if (generatedEObject instanceof EPackage) {
+		        EPackage generatedPackage = (EPackage) generatedEObject;
+		        EPackage.Registry.INSTANCE.put(generatedPackage.getNsURI(),
+		            generatedPackage);
+		    }
+		}
+
+		// add file extension to registry
+		ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap()
+		    .put(MY_FILE_EXTENSION, new GenericXMLResourceFactoryImpl());
+		
+		*/
 		
 		// Save the resource
 		/*
