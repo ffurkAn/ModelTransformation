@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -48,27 +50,44 @@ public class ConvertEcore2Graph {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		//JavaPackage.eINSTANCE.eClass();
 
-		// Register the XMI resource factory for the .xmi extension
-		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		reg.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+	    // Register the XMI resource factory for the .website extension
 
-		// Obtain a new resource set
-		ResourceSet resourceSet = new ResourceSetImpl();
+	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+	    Map<String, Object> m = reg.getExtensionToFactoryMap();
+	    m.put("xmi", new XMIResourceFactoryImpl());
 
-		// Get the resource
-		URI uri = URI.createFileURI("Model/List.xmi");
-		Resource resource = resourceSet.getResource(uri, true);
+	    // Obtain a new resource set
+	    ResourceSet resSet = new ResourceSetImpl();
+	    //XMIResourceImpl resSet = new XMIResourceImpl();
 
-	
-		try {
-			resource.save(System.out, Collections.EMPTY_MAP);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+	    // create a resource
+	    Resource resource = resSet.createResource(URI.createURI("Model/List.xmi"));
+	    // Get the first model element and cast it to the right type, in my
+	    // example everything is hierarchical included in this first node
+	     System.out.println(resource.getContents());
+	     System.out.println("rs: " + resource);
+	     
+	     EPackage.Registry reg1;
+	     reg1 = resSet.getPackageRegistry();
+			System.out.println("registry: " + reg1);
+			System.out.println("EcorePackage.eNS_URI: " + EcorePackage.eNS_URI);
+			System.out.println("EcorePackage.eINSTANCE: " + URI.createFileURI("c:/Users/2/My Repository/UNIT Research and Development/"
+					+ "com.unitbilisim.research.transformation/model/List.xmi"));
+			reg1.put(EcorePackage.eNS_URI, URI.createFileURI("c:/Users/2/My Repository/UNIT Research and Development/"
+					+ "com.unitbilisim.research.transformation/model/List.xmi"));
+			
 		
+	    // now save the content.
+	   /*
+		try {
+	      resource.save(System.out, Collections.EMPTY_MAP);
+	    } catch (IOException e) {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	    }
+		*/
 		
 		// Save the resource
 		/*
