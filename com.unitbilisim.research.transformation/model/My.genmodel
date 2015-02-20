@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.unitbilisim.research.transformation/src" modelPluginID="com.unitbilisim.research.transformation"
+    modelName="My" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>My.ecore</foreignModel>
+  <genPackages prefix="My" disposableProviderFactory="true" ecorePackage="My.ecore#/">
+    <genClasses ecoreClass="My.ecore#//List">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference My.ecore#//List/ownedElements"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference My.ecore#//List/ListFeatures"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute My.ecore#//List/Size"/>
+    </genClasses>
+    <genClasses ecoreClass="My.ecore#//Element">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference My.ecore#//Element/ElementFeature"/>
+    </genClasses>
+    <genClasses ecoreClass="My.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute My.ecore#//NamedElement/Name"/>
+    </genClasses>
+    <genClasses ecoreClass="My.ecore#//UniqueElement"/>
+    <genClasses ecoreClass="My.ecore#//Feature"/>
+    <genClasses ecoreClass="My.ecore#//Collection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference My.ecore#//Collection/ownedLists"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference My.ecore#//Collection/ownedFeatures"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute My.ecore#//Collection/name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
